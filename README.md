@@ -1,6 +1,6 @@
 # Mount Up
 
-A bone simple resin.io app that mounts a micro sd card.
+A bone simple resin.io app that mounts a micro sd card in a beaglebone black.
 
 To work on bare metal,
 
@@ -11,6 +11,9 @@ Resinators, mount up!
 ## What
 
 This triple simple app will mount an micro sd card that's been inserted into a beaglebone black running on resin.io.  
+
+On resin.io, in order to get terminal access and shell into your linux device, you need to first have an app on the device.  So you can use this app as a simple starting point and then merge the components into another app.   
+
 
 ## Why
 
