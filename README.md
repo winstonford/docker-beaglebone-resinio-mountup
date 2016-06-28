@@ -98,14 +98,6 @@ If you boot without a card inserted, you will see:
 ```  
 
 
-### Notes on mounting to /data versus /media
-
-In my tests, when mounted to /data 'Purge' does not delete data on the sd card.
-
-Also, when mounted to the /data dir, the data is persistent across apps.  
-
-
-
 ###Check 
 
 Terminal into the device and run:
@@ -121,7 +113,7 @@ Filesystem      Size  Used Avail Use% Mounted on
 /dev/mmcblk0p1   15G   17M   15G   1% /media  
 ```
 
-### Troubleshooting
+## Troubleshooting
 
 If you don't see the volume:
 
@@ -152,9 +144,19 @@ root        78  0.0  0.4  10620  2236 ?        Ss   18:48   0:00 /lib/systemd/sy
 ```
 
 
-### Notes
+## Notes
 
-The onboard memory and the sdcard are both named dynamically on boot.  So mmcblk06 is short for: multimedia card block zero partition 6.  
+### Mounting to /data versus /media
+
+In my tests, when mounted to /data 'Purge' does not delete data on the sd card.
+
+Also, when mounted to the /data dir, the data is persistent across apps.  
+
+
+
+#### Naming
+
+The onboard memory and the sdcard are both named dynamically on boot.  So I believe mmcblk06 is short for: multimedia card block zero partition 6.  
 
 If you boot with out an sd card, and do df -h you will see 
 
