@@ -16,7 +16,7 @@ WORKDIR /usr/src/app
 # switch on systemd init system in container
 ENV INITSYSTEM on
 
-RUN echo "welcome the troposphere var" > /var/run/motd
+#RUN echo "welcome the troposphere var" > /var/run/motd
 #RUN echo "welcome the troposphere etc" > /etc/motd
 
 # mount sdcard
