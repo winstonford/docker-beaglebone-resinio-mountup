@@ -16,6 +16,8 @@ COPY . ./
 # switch on systemd init system in container
 ENV INITSYSTEM on
 
+RUN echo "welcome the troposphere" > /var/run/motd
+
 # mount sdcard
 ADD mount.sh /usr/local/bin/mount.sh
 RUN chmod +x /usr/local/bin/mount.sh
