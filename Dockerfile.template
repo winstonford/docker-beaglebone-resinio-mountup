@@ -17,7 +17,7 @@ WORKDIR /usr/src/app
 ENV INITSYSTEM on
 
 RUN echo "welcome the troposphere var" > /var/run/motd
-RUN echo "welcome the troposphere etc" > /etc/motd
+#RUN echo "welcome the troposphere etc" > /etc/motd
 
 # mount sdcard
 ADD mount.sh /usr/local/bin/mount.sh
