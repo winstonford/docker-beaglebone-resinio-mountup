@@ -11,12 +11,13 @@ FROM resin/%%RESIN_MACHINE_NAME%%-debian
 WORKDIR /usr/src/app
 
 # This will copy all files in our root to the working  directory in the container
-COPY . ./
+ COPY . ./
 
 # switch on systemd init system in container
 ENV INITSYSTEM on
 
-RUN echo "welcome the troposphere" > /var/run/motd
+RUN echo "welcome the troposphere var" > /var/run/motd
+RUN echo "welcome the troposphere etc" > /etc/motd
 
 # mount sdcard
 ADD mount.sh /usr/local/bin/mount.sh
