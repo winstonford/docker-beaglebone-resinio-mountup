@@ -1,6 +1,6 @@
 # Mount Up
 
-A bone simple resin.io app that mounts a micro sd card in a beaglebone black.
+A bone simple resin.io app that mounts a micro sd card in a beaglebone black running docker.
 
 To work on bare metal,
 
@@ -19,7 +19,7 @@ On resin.io, in order to get terminal access and shell into your linux device, y
 
 On a mac or similar, when you plugin a memory card or a usb drive, the volume shows up automatically.
 
-But on simpler SOC devices like a beaglebone black, this process of mounting is not automatic.
+But on simpler SOC devices like a beaglebone black, this process of mounting may not be automatic.
 
 The resino base application requires a bit under 2gb of space.  But on a beaglebone rev B, there is only 2gb of onboard memory (on the rev C there is 4gb).  So on boot and before adding an app, the disk may already be over 70% full.
 
@@ -54,12 +54,38 @@ Don't see the volume? Scroll on down to **Trouble Shooting** If you see it, move
 
 ### Format
 
-Resin formats the /data volume in btrfs, so do the same.  Use the beaglebone to do the formatting by inserting the card, dropping into a Resin terminal, and running:
+Resin formats the /data volume in btrfs, so do the same.  Use the beaglebone to do the formatting by inserting the card, dropping into a Resin terminal, and run:
 
 ```
 apt-get update && apt-get install btrfs-tools
+```
+
+then format the card:
+
+```
 mkfs.btrfs /dev/mmcblk0p1
 ```
+
+You may get this result:
+
+```
+/dev/mmcblk0p1 appears to contain an existing filesystem (exfat).
+Error: Use the -f option to force overwrite.
+```
+
+so force it:
+
+```
+mkfs.btrfs -f /dev/mmcblk0p1
+```
+
+In the output you may see:
+
+```
+Detected a SSD, turning off metadata duplication.
+```
+
+This one feature of btrfs, that it distinguishes solid state memory from a spinning disk drive.
 
 ### Check
 
@@ -68,6 +94,7 @@ Check to make sure the volume is formatted to btrfs:
 ```
 blkid /dev/mmcblk0p1
 ```
+
 
 Look for TYPE="btrfs" at the end of the output:
 
@@ -157,7 +184,7 @@ Also, when mounted to the /data dir, the data is persistent across apps.
 
 
 
-#### Naming
+### Naming
 
 The onboard memory and the sdcard are both named dynamically on boot.  So I believe mmcblk06 is short for: multimedia card block zero partition 6.  
 
