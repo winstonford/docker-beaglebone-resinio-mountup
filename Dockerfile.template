@@ -21,7 +21,7 @@ ENV INITSYSTEM on
 
 #install btrfs tools
 RUN apt-get update && apt-get install -y \
-apt-get update && apt-get install btrfs-tools
+btrfs-tools
 
 # mount sdcard
 ADD mount.sh /usr/local/bin/mount.sh
