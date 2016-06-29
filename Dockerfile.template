@@ -19,6 +19,10 @@ ENV INITSYSTEM on
 #RUN echo "welcome the troposphere var" > /var/run/motd
 #RUN echo "welcome the troposphere etc" > /etc/motd
 
+#install btrfs tools
+RUN apt-get update && apt-get install -y \
+apt-get update && apt-get install btrfs-tools
+
 # mount sdcard
 ADD mount.sh /usr/local/bin/mount.sh
 RUN chmod +x /usr/local/bin/mount.sh
