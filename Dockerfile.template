@@ -1,28 +1,31 @@
 # see more about dockerfile templates here:http://docs.resin.io/pages/deployment/docker-templates
 FROM resin/%%RESIN_MACHINE_NAME%%-debian
 
-# use apt-get if you need to install dependencies,
-# for instance if you need ALSA sound utils, just uncomment the lines below.
-# RUN apt-get update && apt-get install -yq \
-#    alsa-utils libasound2-dev && \
-#    apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # Set our working directory
 WORKDIR /usr/src/app
 
-# This will copy all files in our root to the working  directory in the container
+# Copy all files in our root to the working  directory in the container
  COPY . ./
 
-# switch on systemd init system in container
+# Switch on systemd init system in container
 ENV INITSYSTEM on
 
-#install btrfs tools
+# Install btrfs formatting tools. 
+# The acronym btrfs means butter, better, or b-tree file system,
+# It's also the format resin uses for the /data dir.
+# One cool thing about btrfs is that it distinguishes between spinning drive disks and ssd's
+# btrfs recognizes the solid state memory of the micro sd card as an ssd.  
+# While an sd card's 30-80 mb/s read / write speeds are a bit slower than a typical ssd,
+# It still functions more like an ssd than a spinning harddrive. 
+# Also note that cmds like df -h and fdisk -l will not recognize btrfs formats,
+# See the readme for more
+
 RUN apt-get update && apt-get install -yq \
 btrfs-tools && \
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-# mount sdcard
+# Mount sdcard
 ADD mount.sh /usr/local/bin/mount.sh
 RUN chmod +x /usr/local/bin/mount.sh
 CMD ["/usr/local/bin/mount.sh"]
