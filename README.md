@@ -12,7 +12,7 @@ Resinators, mount up!
 
 This triple simple app will mount an micro sd card that's been inserted into a beaglebone black running on resin.io.  
 
-On resin.io, in order to get terminal access and shell into your linux device, you need to first have an app on the device.  So you can use this app as a simple starting point and then merge the components into another app.   
+The app also installs btrfs-tools so that you can use the beaglebone to format the card in btrfs.
 
 
 ## Why
@@ -21,7 +21,7 @@ On a mac or similar, when you plugin a memory card or a usb drive, the volume sh
 
 But on simpler SOC devices like a beaglebone black, this process of mounting may not be automatic.
 
-The resino base application requires a bit under 2gb of space.  But on a beaglebone rev B, there is only 2gb of onboard memory (on the rev C there is 4gb).  So on boot and before adding an app, the disk may already be over 70% full.
+The resin os requires a bit under 2gb of space.  But on a beaglebone rev B, there is only 2gb of onboard memory (on the rev C there is 4gb).  So on boot and before provisioning, the disk may already be over 70% full.
 
 With this app, you can easily expand the storage space on a beaglebone black with a micro sd card.  They come in sizes of 8,16,32,64,128 gb.
 
@@ -29,9 +29,19 @@ With this app, you can easily expand the storage space on a beaglebone black wit
  
 ## How 
 
+In short:
+
+1. Insert an sd card
+1. Boot up
+1. Find the volume
+1. Format it 
+1. Reboot
+
+Going forward the card will automount to /media on any device running this app.  Data is not stored in the app, only locally on the card.  Data is persistent across apps.
+
 ### Get a card 
 
-Get a micro sd card. [Sandisk](https://www.amazon.com/dp/B010Q57T02/) works well.  Erase and format the card in FAT format.   On a mac, Disk Utility will do this. 
+Get a micro sd card. [Sandisk](https://www.amazon.com/dp/B010Q57T02/) works well.  Insert the card into the beaglebone slot.  Power up. 
 
 ### Find the volume
 
@@ -55,10 +65,6 @@ Don't see the volume? Scroll on down to **Trouble Shooting** If you see it, move
 ### Format
 
 Resin formats the /data volume in btrfs, so do the same.  Use the beaglebone to do the formatting by inserting the card, dropping into a Resin terminal, and run:
-
-```
-apt-get update && apt-get install btrfs-tools
-```
 
 then format the card:
 
@@ -102,7 +108,7 @@ Look for TYPE="btrfs" at the end of the output:
 /dev/mmcblk0p1: UUID="af4061b8-9b97-4d55-a0dc-7510a82cde99" UUID_SUB="7b8a9341-fc48-4a48-9116-23638f2086c3" TYPE="btrfs"
 ```
 
-At this point you are pretty much done.  Going forward, the sd card stays in the beaglebone and the data on it is persistent.  
+At this point you may be done.  Going forward, the sd card mounts on boot and the data on it is persistent.  The contents of /media are not save in the app like the contents of /data are.  Also, /media is persistent when moving between apps, where as /data is app specific.
 
 ### Reboot
 
@@ -172,6 +178,36 @@ You should see
 ```
 root        78  0.0  0.4  10620  2236 ?        Ss   18:48   0:00 /lib/systemd/systemd-udevd   
 ```
+
+On boot did you see something like this?
+
+```
+29.06.16 18:59:15 [-0400] mount.sh mounting sc card to /media
+29.06.16 18:59:16 [-0400] mount: wrong fs type, bad option, bad superblock on /dev/mmcblk0p1,
+29.06.16 18:59:16 [-0400] missing codepage or helper program, or other error
+29.06.16 18:59:16 [-0400]
+29.06.16 18:59:16 [-0400] In some cases useful info is found in syslog - try
+
+```
+
+If so, the sd card may not be properly formatted.  In this case, it was fresh out of the package. 
+
+Terminal into the device and run:
+
+```
+root@beaglebone-add648:/# fdisk -l
+
+```
+
+The card is formatted in FAT32
+
+```
+Device         Boot Start      End  Sectors  Size Id Type
+/dev/mmcblk0p1       8192 62552063 62543872 29.8G  c W95 FAT32 (LBA)
+
+```
+
+
 
 
 ## Notes

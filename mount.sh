@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#wmf
 echo "mount.sh starting"
 
 #echo "mount.sh sleeping"
