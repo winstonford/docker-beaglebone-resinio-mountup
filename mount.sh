@@ -2,10 +2,6 @@
 
 echo "mount.sh starting"
 
-echo "add /etc/motd to pam"
-echo "session    optional     pam_motd.so motd=/etc/motd" >> /etc/pam.d/login
-echo "added /etc/motd to pam"
-
 #echo "mount.sh sleeping"
 #sleep 1m
 #echo "mount.sh waking"
