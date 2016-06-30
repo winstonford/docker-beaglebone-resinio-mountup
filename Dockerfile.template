@@ -17,7 +17,7 @@ ENV INITSYSTEM on
 # btrfs recognizes the solid state memory of the micro sd card as an ssd.  
 # While an sd card's 30-80 mb/s read / write speeds are a bit slower than a typical ssd,
 # It still functions more like an ssd than a spinning harddrive. 
-# Also note that cmds like df -h and fdisk -l will not recognize btrfs formats,
+# Also note that cmds like df -h and fdisk -l will see the btrfs volumes, but mislabel the format,
 # See the readme for more
 
 RUN apt-get update && apt-get install -yq \
