@@ -30,5 +30,4 @@ apt-get clean && rm -rf /var/lib/apt/lists/*
 #RUN chmod +x /usr/local/bin/mount.sh
 #CMD ["/usr/local/bin/mount.sh"]
 
-RUN chmod +x /usr/src/app/mount.sh
-CMD ["/usr/src/app/mount.sh"]
+#CMD ["/usr/src/app/mount.sh"]
